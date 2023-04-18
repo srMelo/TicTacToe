@@ -13,28 +13,40 @@ function App() {
 
   const [winnerX, setWinnerX] = useState(false)
   const [winnerO, setWinnerO] = useState(false)
+  const [old, setOld] = useState(false)
 
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState()
+  const [reStart, setReStart] = useState(false)
   const [check, setCheck] = useState(true)
 
-  const [nameX, setNameX] = useState('xis')
-  const [nameO, setNameO] = useState('bola')
+  const [nameX, setNameX] = useState('')
+  const [nameO, setNameO] = useState('')
+
+
+  const namePlayer = (x, o)=>{
+    setNameX(x)
+    setNameO(o)
+  }
+  const chooseTime = (val)=>{
+    const result = area.filter((e)=>{
+     return e == ''
+    })
+    result.length == 9 ? setValue(val):''
+  }
 
   function start() {
+    setReStart(false)
     const newArray = Array(9).fill('')
     setArea(newArray)
     winnerO ? setSocoreO(scoreO + 1) :''
     winnerX ? setSocoreX(scoreX + 1) :'' 
     setWinnerO(false)
     setWinnerX(false)
-    setStatus(!status)
-  }
-
-  const namePlayer = (nameXis, nameBola)=>{
-    setNameX(nameXis)
-    setNameO(nameBola)
-
-    return console.log(nameXis, nameBola)
+    if(old){
+      setStatus(true)
+      return setOld(false)
+    }else{
+    setStatus(true)}
   }
 
   const infoUsers = () => {
@@ -47,76 +59,39 @@ function App() {
   }, [check])
 
   useEffect(() => {
-    winnerO ? setStatus(!status)
-      :
-      winnerX ? setStatus(!status)
-        : ''
+    if(winnerO){
+      setStatus(!status)
+      return setReStart(true)}  
+    if(winnerX){
+      setStatus(!status)
+      return setReStart(true)}
+    else{tied()}
   }, [value])
 
-  const howX = () => {
-    // ----> value  'o'
-    if (area && area[0] == 'o' && area[1] == 'o' && area[2] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    if (area && area[3] == 'o' && area[4] == 'o' && area[5] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    if (area && area[6] == 'o' && area[7] == 'o' && area[8] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    // ----> value 'x'
-    if (area && area[0] == 'x' && area[1] == 'x' && area[2] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    if (area && area[3] == 'x' && area[4] == 'x' && area[5] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    if (area && area[6] == 'x' && area[7] == 'x' && area[8] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    howY()
+  const checkWinner = () => {
+    const conbinationsForWinner = [
+      [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+    ]
+    conbinationsForWinner.forEach((e)=>{
+      const xWinner = e.filter((val)=>{
+        return area[val] == 'x'
+       })
+      const oWinner = e.filter((val)=>{
+        return area[val] == 'o'
+       })
+       xWinner.length == 3?setWinnerX(!winnerX):''
+       oWinner.length == 3?setWinnerO(!winnerO):''
+    })
   }
 
-  const howY = () => {
-    // ^ value 'x'
-    if (area && area[0] == 'x' && area[3] == 'x' && area[6] == 'x') {
-      return setWinnerX(!winnerX)
+    const tied = ()=>{
+      const result = area && area.filter((e)=>{
+        return e == ''
+      })
+      if(result && result.length == 0){
+        return setOld(true)
+      }
     }
-    if (area && area[1] == 'x' && area[4] == 'x' && area[7] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    if (area && area[2] == 'x' && area[5] == 'x' && area[8] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    // ^ value 'o'
-    if (area && area[0] == 'o' && area[3] == 'o' && area[6] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    if (area && area[1] == 'o' && area[4] == 'o' && area[7] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    if (area && area[2] == 'o' && area[5] == 'o' && area[8] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    howZ()
-  }
-
-  const howZ = () => {
-    if (area && area[0] == 'x' && area[4] == 'x' && area[8] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    if (area && area[2] == 'x' && area[4] == 'x' && area[6] == 'x') {
-      return setWinnerX(!winnerX)
-    }
-    if (area && area[0] == 'o' && area[4] == 'o' && area[8] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-    if (area && area[2] == 'o' && area[4] == 'o' && area[6] == 'o') {
-      return setWinnerO(!winnerO)
-    }
-
-
-  }
 
   function valueContent(element) {
     return area[element] == 'x' ? true
@@ -130,49 +105,53 @@ function App() {
     } else {
       area.splice(index, 1, value ? 'x' : 'o')
       setValue(!value)
-      howX()
-    }
-  }
-
-
-
+      checkWinner()
+    }}
 
   return (
     <>
 
       <div id="container">
-        <Nav playerX={scoreX} playerO={scoreO} />
+        <Nav playerX={scoreX} playerO={scoreO} tied={old} reset={start} />
         <div className='container'>
           {
             check?
-              <Players handleName={()=> namePlayer()} success={infoUsers}/>
+              <Players handleName={namePlayer} success={infoUsers}/>
               :
               <div style={{display:'flex', justifyContent:'center', alignItems:'center'}} className='game'>
 
             {
               status ?
                 <>
-                  <div style={{display:'flex',flexDirection:'column', alignItems:'center', fontSize:'25px'}} onClick={() => { setValue(true) }}>{nameX && nameX}<div className={value ? 'selected' : 'values'}>x</div></div>
+                  <div className='nameXis' style={{display:'flex',flexDirection:'column', alignItems:'center', fontSize:'25px'}}>{value?nameX:''}
+                    <div onClick={()=>chooseTime(true)} className={value ? 'selected' : 'values'}>x</div>
+                      </div>
                   <div className="App">
                     {area &&
                       area.map((e, index) => {
                         return <div key={index} onClick={() => insert(index, value)} id={`area${index}`} className='area'>{e}</div>
                       })}
                   </div>
-                  <div style={{display:'flex',flexDirection:'column', alignItems:'center', fontSize:'25px'}} onClick={() => { setValue(false) }}>{nameO}<div className={value ? 'values' : 'selected'}>o</div></div>
+                  <div className='nameBola' style={{display:'flex',flexDirection:'column', alignItems:'center', fontSize:'25px'}}>{value?'':nameO}
+                  <div onClick={()=>chooseTime(false)} className={value ? 'values' : 'selected'}>o</div></div>
                 </>
-                :
+                :''
+                }
+                {
+                  reStart?
                 <>
                   <div className='WinnerScreen'>
                     <div style={{display: 'flex', alignItems:'center', justifyContent:'center', padding:'20px', margin: '20px'}} className="screenInfo">
-                      <h1>Parabéns! O vencedor é :  {winnerO ? 'o' : 'x'}</h1>
+                      <h1>Parabéns! O vencedor é :  {winnerO ? nameO : nameX}</h1>
                     </div>
                     <div className='reset'>
-                      <div><h2 onClick={() => start()}>Jogar Novamente</h2></div>
+                      <div><h2 onClick={start}>Jogar Novamente</h2></div>
                     </div>
                   </div>
                 </>
-            }
+                :
+                ''
+                }
           </div>
           }
         </div>

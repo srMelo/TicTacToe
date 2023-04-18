@@ -2,7 +2,7 @@ import React from "react";
 
 
 function Nav (props){
-    const {playerX, playerO} = props
+    const {playerX, playerO, tied, reset} = props
 
     return(
         <div style={{display:'flex', justifyContent:'space-between'}} className="nav">
@@ -15,6 +15,12 @@ function Nav (props){
                     <div style={{display:'flex'}} className="scoreX">o : <p className="pointer" style={{color:'red', margin:'1px'}}>{playerO}</p> </div>
                 </div>
             </div>
+            {tied?
+            <div onClick={()=> reset()} style={{justifyContent:'flex-start', width:'35vh', display:'flex', alignItems:'center',padding:'10px'}}>
+                <h1 className="tied" >Velha!</h1>
+            </div>
+            :''
+            }
             <div className="nameGame">
                 <h2>Tic Tac Toe</h2>
             </div>

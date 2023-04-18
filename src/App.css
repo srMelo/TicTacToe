@@ -77,23 +77,7 @@
   box-shadow: 2px 2px 2px hsl(0, 100%, 2%);
 
 }
-.nameX{
-  width: 30vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 2rem;
-
-  padding: 5px;
-  margin: 10px;
-  border-radius: 5px;
-  background-color: rgb(207, 116, 30);
-
-  box-shadow: 2px 2px 2px rgb(109, 109, 109);
-}
+.nameX,
 .nameO{
   width: 30vh;
 
@@ -104,14 +88,12 @@
 
   font-size: 2rem;
 
-  margin: 10px;
   padding: 5px;
+  margin: 10px;
   border-radius: 5px;
   background-color: rgb(207, 116, 30);
 
-
-  box-shadow: 2px 2px 2px rgb(109, 109, 109);
-}
+  box-shadow: 2px 2px 2px rgb(109, 109, 109);}
 
 input{
   border: none;
@@ -120,11 +102,10 @@ input{
   border-radius: 5px;
 
   font-size: 1rem;
-  box-shadow: 2px 2px 2px rgb(109, 109, 109);
+  box-shadow: 2px 2px 2px rgb(109, 109, 109);}
 
-}
-
-.confirm{
+.confirm,
+.tied{
   margin-top: 1rem;
   background-color: rgb(207, 116, 30);
   padding: 5px;
@@ -134,11 +115,11 @@ input{
 
   font-size: 2rem;
 }
-.confirm:hover{
+.confirm:hover,
+.tied:hover{
   background-color: rgb(99, 55, 15);
   color: #ecc375;
-  box-shadow: none;
-}
+  box-shadow: none;}
 
 .App{
   background-color: #ffffff00;
@@ -162,41 +143,22 @@ input{
   font-size: 4rem;
 }
 
-/* line 1 */
-#area0{
-  border-bottom: solid 2px black;
-}
-#area1{
-  border-left: solid 2px black;
-  border-bottom: solid 2px black;
-  border-right: solid 2px black;
-}
-#area2{
-  border-bottom: solid 2px black;
-}
-
-/* line 2 */
-
-#area3{
-  border-bottom: solid 2px black;
-}
-#area4{
-  border-left: solid 2px black;
-  border-bottom: solid 2px black;
-  border-right: solid 2px black;
-}
+#area0,
+#area1,
+#area2,
+#area3,
+#area4,
 #area5{
   border-bottom: solid 2px black;
 }
-
-/* last line */
-
+#area1,
+#area4,
 #area7{
   border-left: solid 2px black;
   border-right: solid 2px black;
 }
-
-.values{
+.values,
+.selected{
   height: 5rem;
   width: 6rem;
 
@@ -209,17 +171,7 @@ input{
 }
 
 .selected{
-  border: solid 2px red;
-  height: 5rem;
-  width: 6rem;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  cursor: pointer;
-  font-size: 4rem;
-}
+  border: solid 2px red;}
 
 .Winner{
   height: 10vh;

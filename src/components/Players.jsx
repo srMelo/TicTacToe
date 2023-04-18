@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 function Players(props) {
-const {success, handleName } = props
-const[bola, setBola] = useState()
-const[xis, setXis] = useState()
+const {success, handleName} = props
+const[bola, setBola] = useState('Bola')
+const[xis, setXis] = useState('Xis')
 
-const data = {
-    nameX: 'exe',
-    nameO: 'sddd'
-}
-
-function start (){
-    handleName(data.nameX, data.nameO)
-    return success()
-}
+    function start (){
+        handleName(xis, bola)
+        success()
+    }
 
     return (
         <div className="containerWhatName">
@@ -22,13 +17,13 @@ function start (){
                 <div className="nameX">
                     <div>x</div>
                     <div>
-                        <input onChange={e => setXis(e.target.value)} placeholder="Xis" type="text" />
+                        <input onChange={e => setXis(e.target.value)} placeholder="Xis" type="text" value={xis}/>
                     </div>
                 </div>
                 <div className="nameO">
                     <div>o</div>
                     <div>
-                        <input onChange={e => setBola(e.target.value)} placeholder="Bola" type="text" />
+                        <input onChange={e => setBola(e.target.value)} placeholder="Bola" type="text" value={bola} />
                     </div>
                 </div>
             <div onClick={()=> start()} className="confirm">Jogar</div>
